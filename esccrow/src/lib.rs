@@ -263,8 +263,6 @@ impl Contract {
         false
     }
 
-   // TODO: CHECK ACCOUNT ID ARE VALID
-   // TODO: ADD STORAGE MANAGEMENT, IT MAY BE NECESSARY TO MERGE CREATION AND TRANSFERENCE OF TOKENS
     #[payable]
     pub fn create_transaction(
         &mut self,
@@ -332,7 +330,6 @@ impl Contract {
 
         //env::log("characters counted: {}", len);
         
-        //TODO: modify it to take into account price
         //deposit_refund(new_transaction_size_in_bytes, price*YOCTO_NEAR, cache_size_in_bytes); // refactor price to the beginning of the function
         deposit_refund(new_transaction_size_in_bytes, price_u128, cache_size_in_bytes); 
         transaction
@@ -618,13 +615,6 @@ impl Contract {
         self.get_transaction_by_id(transaction_id)
     }
 
-
-    // TODO: PAY THE SELLER
-    // TODO: PAY AMOUNT REQUIRED MINUS TRANSACTION FEE
-    // TODO: PAY ONLY IF NFT WAS TRANSFERRED
-    // TODO: PAY ONLY IF CONTRACT HAS ENOUGH FUNDS
-    // TODO: PAY ONLY IF TRANSACTION WAS SUCCESSFUL
-    // TODO: PAY CAN BE CALLED ONLY ONCE PER TRANSACTION
     pub fn pay_transaction(&mut self, transaction_id: TransactionId) -> Transaction {
 
         let mut transaction = self.get_transaction_by_id(transaction_id);
@@ -970,13 +960,6 @@ impl Contract {
         }
     }
 
-    // TODO: Check if NFT is owned by the contract
-    // TODO: Only can be called after the tokens has been locked
-    // DONE: MODIFY THIS FUNCTION TO USE NFT_TRANSFER
-    // DONE: WRITE ON_NFT_TRANSFER
-    // DONE: ADD TRAITS FOR NFT_TRANSFER AND ON_NFT_TRANSFER
-    // TODO: MAKE IT USE THE INFO OF THE TRANSACTION
-    // TODO: TRY TO GENERALIZE IT
     pub fn transfer_nft_from_scrow(&self,   // make it use only transaction id
         receiver_id: AccountId, 
         nft_contract_id: AccountId, 
@@ -1004,8 +987,6 @@ impl Contract {
     // Transfer function
     // It will trasnfer the nft to the buyer if the transaction was successful
     // It will transfer back the nft to the seller if the transaction was not successful
-    // TODO: Look for a better status than completed.
-    // TODO: MAKE THE FUNCTION UPDATE TRANSACTION STATUS
     pub fn transfer_nft(&mut self, transaction_id: TransactionId){
 
         let mut transaction = self.get_transaction_by_id(transaction_id);
